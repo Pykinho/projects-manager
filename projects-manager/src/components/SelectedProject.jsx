@@ -1,11 +1,20 @@
 import Button from "./Button";
+import Tasks from "./Tasks";
 
-export default function SelectedProject({ project, onDelete }) {
+export default function SelectedProject({
+  project,
+  onDelete,
+  onAddTask,
+  onDeleteTask,
+  tasks,
+}) {
   const formattedDate = new Date(project.dueDate).toLocaleDateString("en-us", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
+
+  const filteredTasks = tasks.filter((task) => task.projectId === project.id);
   return (
     <div className="w-[35rem] mt-16">
       <header className="pb-4 mb-4 border-b-2 border-stone-300">
@@ -21,7 +30,11 @@ export default function SelectedProject({ project, onDelete }) {
           {project.description}
         </p>
       </header>
-      Tasks
+      <Tasks
+        onAddTask={onAddTask}
+        onDeleteTask={onDeleteTask}
+        tasks={filteredTasks}
+      />
     </div>
   );
 }
